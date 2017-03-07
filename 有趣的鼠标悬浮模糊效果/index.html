@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>有趣的鼠标悬浮模糊效果</title>
+	<style type="text/css">
+		.container{
+			margin:50px auto;
+			height:300px; 
+			width:400px;
+			position: relative;
+		}
+		img{
+			height:300px; 
+			width:400px;
+			position: absolute;
+			top:0;
+			left: 0;
+		}
+		.container:hover img{
+			filter: blur(2px);
+		}
+
+		.box{
+			width: 85%;
+    		height: 80%;
+    		padding: 30px;
+    		position: relative;
+
+		}
+		.container:hover .content{
+			opacity: 1;
+			animation: opacity 1s;
+		}
+		.content{
+			text-align: center;
+			width: 100%;
+			height: 100%;
+			/*margin: 5% auto;*/
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			flex-direction: column;
+			position: relative;
+		    /* -webkit-box-pack: center; */
+		    align-items: center;
+		    opacity: 0;
+		        text-shadow: 1px 1px 2px rgba(0,0,0,.26);
+    			box-shadow: 0 0 30px 20px rgba(0,0,0,.46);
+		}
+		.box .content:before{
+			content: "";
+			position: absolute;
+			left: 0;
+			top:50%;
+			border: 3px solid #BBD1C3;
+			border-width:0 3px; 
+			visibility: hidden;
+			height: 0;
+			width: 100%;
+			transition: all 1s;
+		}
+		.box .content:after{
+			content: "";
+			position: absolute;
+			left: 50%;
+			top:0%;
+			border: 3px solid #BBD1C3;
+			border-width:3px 0px; 
+			height: 100%;
+			width: 0;
+			transition: all 1s;
+
+		}
+		.container:hover .content:before{
+			top: 0%;
+			content: "";
+			visibility: visible;
+			height: 102%;
+		}
+		.container:hover .content:after{
+			content: "";
+			left: 0px;
+			visibility: visible;
+			width: 102%;
+		}
+		.title{
+			width: 100%;
+			/*height: 30px;*/
+		}
+		.click{
+			width: 100%;
+			height: 30px;
+			margin-top: 20px;
+			z-index: 100;
+		}
+		.title ,.click{
+			color: transparent;
+			background-image:linear-gradient(90deg, #A84444 10%,#A86544 20%,#A89844 30%,#88A844 40%,#51A844 50%,#44A865 60%,#44A89A 70%,#4469A8 80%,#6D44A8 90%, #A8447E 100%);
+			-webkit-background-clip: text;
+			background-size: 200% 100%;
+			animation: load 4s infinite linear;
+		}
+		@keyframes load{
+			0%{
+				background-position: 0 0;
+			}
+			100%{
+				background-position: -200% 0;
+			}
+		}
+		@keyframes opacity{
+			0%{
+				opacity: 0
+			}
+			100%{
+				opacity: 1;
+			}
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<img src="bg.jpg">
+	<div class="box">
+		<div class="content">
+			<h2 class="title">MORE PICTURES IN THERE.</h2>
+			<a href="http://wsyks.github.io" class="click">点击进去</a>
+		</div>
+	</div>
+	
+	<!-- <img src="bg.jpg" height="300" width="400"> -->
+</div>
+</body>
+</html>
