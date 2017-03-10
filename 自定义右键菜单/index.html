@@ -106,12 +106,44 @@
 	}
 	var mymenu=document.getElementById("supermenu");
 	
+	//监听contextmenu事件
+	// for(var i=0;i<$(".menu").length;i++){
+	// 	$(".menu")[i].addEventListener("contextmenu",function(e){
+	// 		e.preventDefault();//阻止原有的菜单
+	// 		e.returnValue=false;//在IE中阻止原有的菜单
+	
+	// 		mymenu.style.cssText='display: block;'; //先显示后才能获取menu的高宽
+	// 		var menuwidth=mymenu.offsetWidth;//获取自定义菜单的高宽
+	// 		var menuheight=mymenu.offsetHeight;
+	// 		console.log(menuheight,menuwidth);
+	// 		var clientwidth=document.documentElement.clientWidth;//获取当前可视窗口的高宽
+	// 		var clientheight=document.documentElement.clientHeight;
+	// 		if(clientheight-e.pageY>=menuheight){ //底下有足够空间时
+	// 			mymenu.style.top=e.pageY+"px";//菜单在下方
+	// 		}else{
+	// 			mymenu.style.top=(e.pageY-menuheight)+"px";
+	// 		}
+	// 		if(clientwidth-e.pageX>=menuwidth){ //右边有足够空间
+	// 			mymenu.style.left=e.pageX+"px";//菜单有右边
+	// 		}else{
+	// 			mymenu.style.left=(e.pageX-menuwidth)+"px";
+	// 		}
+	// 			console.log(clientheight-e.pageY,clientwidth-e.pageX);
+	// 	})
+	// 	document.body.addEventListener("click",function(e){ //点击其他地方菜单消失，可恢复默认的菜单事件
+	// 		mymenu.style.cssText='display: none;';
+	// 	})
+	// }
+
+	//监听mousedown事件
+
 	for(var i=0;i<$(".menu").length;i++){
 		$(".menu")[i].addEventListener("mousedown",function(e){
 			if(window.event) e=window.event; //兼容性
-			if(e.button==2){
+			if(e.button==2){//判断按下右键
 				document.oncontextmenu=function(e){
 					e.preventDefault();//阻止原有的菜单
+					// e.returnValue=false;
 				}
 				mymenu.style.cssText='display: block;'; //先显示后才能获取menu的高宽
 				var menuwidth=mymenu.offsetWidth;//获取自定义菜单的高宽
@@ -138,6 +170,7 @@
 			document.oncontextmenu=function(e){}
 		})
 	}
+
 	
 </script>
 </body>
