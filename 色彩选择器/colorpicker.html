@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>颜色选择器</title>
+	<link rel="stylesheet" href="colorpicker.css">
+
+</head>
+<body>
+<div class="colorpicker">
+	<div class="colorbox">
+		<canvas id="canvas" height="300" width="300"></canvas>
+		<div id="colorpicker-circle"></div>
+	</div>
+	<div class="colorslide" id="colorpicker-slide">
+		<div id="colorslide-circle"></div>
+	</div>
+	<div class="colorcontent">
+		<div class="pickerbox" id="pickercolor"></div>
+		<hr>
+		<span>hex:</span><input type="text" id="hex">
+		<hr>
+		<div class="rgbbox">
+			<ul>
+				<li>R<input type="number" name="R" id="colorpicker-rgbr" min="0" max="255"></li>
+				<li>G<input type="number" name="G" id="colorpicker-rgbg" min="0" max="255"></li>
+				<li>B<input type="number" name="B" id="colorpicker-rgbb" min="0" max="255"></li>
+			</ul>
+		</div>
+		<hr>
+		<div class="hslvbox">
+			<table class="hslbox">
+				<tr>
+					<td>H</td>
+					<td><input type="number" name="H" id="colorpicker-hslh" step="1" min="0" max="360"></td>
+				</tr>
+				<tr>
+					<td>S</td>
+					<td><input type="number" name="S" id="colorpicker-hsls" step="1" min="0" max="100">%</td>
+				</tr>
+				<tr>
+					<td>L</td>
+					<td><input type="number" name="L" id="colorpicker-hsll" step="1" min="0" max="100">%</td>
+				</tr>
+			</table>
+
+			<table class="hsvbox">
+				<tr>
+					<td>H</td>
+					<td><input type="number" name="HH" id="colorpicker-hsvh" step="1" min="0" max="360"></td>
+				</tr>
+				<tr>
+					<td>S</td>
+					<td><input type="number" name="SS" id="colorpicker-hsvs" step="1" min="0" max="100">%</td>
+				</tr>
+				<tr>
+					<td>V</td>
+					<td><input type="number" name="V" id="colorpicker-hsvv" step="1" min="0" max="100">%</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+<script src="jquery-2.1.4.min.js"></script>
+<script src="colorpicker.js"></script>
+</body>
+</html>

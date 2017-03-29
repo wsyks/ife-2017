@@ -1,0 +1,128 @@
+.colorpicker{
+	display: flex;
+	width: 600px;
+	margin:200px auto;
+	padding:15px;
+	border:1px solid #ccc;
+}
+// .colorpicker .slide{
+// 	height: 300px;
+// 	width: 28px;
+// 	position: relative;
+// }
+.colorslide{
+	height: 300px;
+	width: 28px;
+	position: relative;
+	/*background: linear-gradient(to top right, hsla(360,100%,50%,0.5), #416796 50%, #B5CAE4);*/
+	background: linear-gradient(to bottom, hsla(0,100%,50%,1) 10%,hsla(36,100%,50%,1) 20%,hsla(72,100%,50%,1) 30%,hsla(108,100%,50%,1) 40%,hsla(180,100%,50%,1) 50%,hsla(216,100%,50%,1) 60%,hsla(252,100%,50%,1) 70%,hsla(288,100%,50%,1) 80%,hsla(324,100%,50%,1) 90%, hsla(360,100%,50%,1) 100%);
+	/*background-color:linear-gradient(hsla(360,50%,50%,0.5),hsla(360,50%,50%,0.5));*/
+	    overflow: hidden;
+}
+.colorpicker .colorcontent{
+	margin-left: 30px;
+    padding: 10px 15px;
+    height: 300px;
+    border: 1px solid #ddd;
+    // padding: 3% 5%;
+    box-sizing: border-box;
+    width: 200px;
+}
+.colorpicker .colorcontent .pickerbox{
+    height: 28px;
+    width: 160px;
+    border: 1px solid #eee;
+    // margin-bottom: 25px;
+}
+.colorpicker .colorcontent .rgbbox ul,.colorpicker .colorcontent .hslbox ul{
+	list-style-type: none;
+}
+.colorpicker .colorbox{
+	margin-right:30px;
+	height: 300px;
+	width: 300px;
+	position: relative;
+	overflow: hidden;
+	/*background: linear-gradient(to top right, hsla(360,100%,50%,0.5), #416796 50%, #B5CAE4);*/
+	/*background: linear-gradient(135deg, hsla(141,0%,100%,1),hsla(141,50%,50%,1) 50%,hsla(141,100%,00%,1) 100%);*/
+	/*background-color:linear-gradient(hsla(360,50%,50%,0.5),hsla(360,50%,50%,0.5));*/
+}
+.colorpicker .pickerbox{
+
+}
+#colorpicker-circle{
+	position: absolute;
+    height: 5px;
+    width: 5px;
+    background-color: transparent;
+    border: 3px solid #eee;
+    border-radius: 50%;
+    box-shadow: 0px 0px 7px #fff;
+    left: 295px;
+    top:-5px;
+    display: none;
+}
+#colorslide-circle{
+	position: relative;
+    height: 10px;
+    width: 10px;
+    background-color: transparent;
+    border: 3px solid #eee;
+    border-radius: 50%;
+    box-shadow: 0px 0px 7px #fff;
+    /* left: 6px; */
+    top: -7px;
+    margin: 0 auto;
+    display: none;
+
+}
+.colorpicker hr{
+	border-color: rgba(255,255,255,0.8);
+}
+#hex{
+	width: 108px;
+    display: inline-block;
+    margin: 8px 0 8px 6px;
+    padding: 0 6px;
+    height: 20px;
+}
+
+
+.rgbbox{
+	width: 100%;
+}
+.rgbbox ul{
+	display: flex;
+	padding:0px;
+	width: 100%;
+}
+
+.rgbbox ul li{
+	width: 30%;
+	margin:0 3%;
+}
+
+.rgbbox ul li input{
+	width: 93%;
+}
+
+.hslvbox{
+	display: flex;
+	width: 100%;
+}
+.hslbox,.hsvbox{
+	width: 50%;
+}
+
+.hslbox tr td input ,.hsvbox tr td input{
+	width:42px;
+}
+
+// .hsvbox tr td input{
+// 	width:42px;
+// }
+
+// .hslbox ul li input{
+// 	width: 93%;
+// 	display: block;
+// }

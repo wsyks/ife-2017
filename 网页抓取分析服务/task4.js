@@ -47,32 +47,32 @@ http.createServer(function(req, res) {
         var queryObj = url.parse(req.url,true).query;
         console.log(queryObj);
 
-        exec(cmdStr + queryObj.word + ' ' + queryObj.device, function(err, stdout, stderr){
-            if(err) {
-                console.error(`exec error: ${error}`);
-            } else {
-                try {
-                    JSON.parse(stdout);
+        exec(cmdStr + queryObj.word + ' ' + queryObj.device, {encoding:'utf8'},function(err, stdout, stderr){
+            // if(err) {
+            //     console.error(`exec error: ${error}`);
+            // } else {
+            //     try {
+            //         JSON.parse(stdout);
                     console.log(stdout);
-                } catch (err) {
+                // } catch (err) {
                     res.writeHead(200, {'Content-Type': 'application/json'});
                     return res.end(JSON.stringify({code: 0, msg: '请确认查询参数是否正确'}));
-                }
-                // 新建一个文档
-                var result = new Result(JSON.parse(stdout));
+        //         }
+        //         // 新建一个文档
+        //         var result = new Result(JSON.parse(stdout));
 
-                res.writeHead(200, {'Content-Type': 'application/json'});
-                res.end(stdout);
+        //         res.writeHead(200, {'Content-Type': 'application/json'});
+        //         res.end(stdout);
 
-                // 将文档保存到数据库
-                result.save(function(err, result) {
-                  if (err) {
-                    console.error(err);
-                  } else {
-                    console.log(result);
-                  }
-                });
-            }
+        //         // 将文档保存到数据库
+        //         result.save(function(err, result) {
+        //           if (err) {
+        //             console.error(err);
+        //           } else {
+        //             console.log(result);
+        //           }
+        //         });
+        //     }
         });
       }
 
