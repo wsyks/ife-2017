@@ -8,19 +8,19 @@
 </head>
 <body>
 <div class="colorpicker">
-	<div class="colorbox">
+	<div class="colorbox"> <!-- 左边渐变区块 -->
 		<canvas id="canvas" height="300" width="300"></canvas>
 		<div id="colorpicker-circle"></div>
 	</div>
-	<div class="colorslide" id="colorpicker-slide">
+	<div class="colorslide" id="colorpicker-slide"> <!-- 中间的色带 -->
 		<div id="colorslide-circle"></div>
 	</div>
 	<div class="colorcontent">
-		<div class="pickerbox" id="pickercolor"></div>
+		<div class="pickerbox" id="pickercolor"></div> <!-- 取色后显示颜色的区块 -->
 		<hr>
-		<span>hex:</span><input type="text" id="hex">
+		<span>hex:</span><input type="text" id="hex"><!-- 显示颜色的hex值 -->
 		<hr>
-		<div class="rgbbox">
+		<div class="rgbbox"><!-- 显示颜色的rgb值 -->
 			<ul>
 				<li>R<input type="number" name="R" id="colorpicker-rgbr" min="0" max="255"></li>
 				<li>G<input type="number" name="G" id="colorpicker-rgbg" min="0" max="255"></li>
@@ -28,7 +28,7 @@
 			</ul>
 		</div>
 		<hr>
-		<div class="hslvbox">
+		<div class="hslvbox"><!-- 显示颜色的hsl值 -->
 			<table class="hslbox">
 				<tr>
 					<td>H</td>
@@ -44,7 +44,7 @@
 				</tr>
 			</table>
 
-			<table class="hsvbox">
+			<table class="hsvbox"><!-- 显示颜色的hsv值 -->
 				<tr>
 					<td>H</td>
 					<td><input type="number" name="HH" id="colorpicker-hsvh" step="1" min="0" max="360"></td>

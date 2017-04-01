@@ -1,179 +1,172 @@
 var colorPicker= function(id,config){
-	this.element=$("#"+id)[0];
-	this.jqelement=$("#"+id);
-	this.slide=$("#colorpicker-slide")[0];
+	this.element=$("#"+id)[0];//左边取色区域的DOM对象
+	this.jqelement=$("#"+id);//左边取色区域的jq对象
+	this.slide=$("#colorpicker-slide")[0];//中间色带的DOM对象
 	this.jqslide=$("#colorpicker-slide");
-	this.width = this.element.width || 300;
-	this.height = this.element.height ||300;
-	this.pickercircle=$("#colorpicker-circle");
+	this.width = this.element.width || 300;//左边取色区域的宽度
+	this.height = this.element.height ||300;//左边取色区域的高度
+	this.pickercircle=$("#colorpicker-circle");//左边取色小圆点
 	this.context = this.element.getContext("2d"); 
 	this._init();
 }
 colorPicker.prototype = {
-	_init:function(){
-		this.canvasX=0;
-		this.canvasY=0;
-		this.hsl=[0,100,50];
-		this.rgb=[255,0,0];
-		this.hsv=[0,100,100];
-		this.hex="#ffffff";
-		this._drawbg();
-		this._pickcolor();
-		this._slidecolor();
-		this._updatergb();
-		this._updatehslv();
-		this._contentchange();
-	},
-	//填充左边颜色的渐变
-	_drawbg:function(color){
-		var x1 = 0;
-		var y1 = 0;
-		//水平的渐变
-		var linear_gradient_hori = this.context.createLinearGradient(x1, y1, this.width, 0);
-		linear_gradient_hori.addColorStop(0, 'rgba(255,255,255,1)'); 
-		linear_gradient_hori.addColorStop(1,color?color:'rgba(255,0,0,1)');//添加上颜色
-		this.context.fillStyle=linear_gradient_hori;
-		this.context.fillRect(0, 0, this.width, this.height); 
-		//垂直的渐变
-		var linear_gradient_ver = this.context.createLinearGradient(x1, y1, 0, this.height);
-		linear_gradient_ver.addColorStop(0, 'rgba(0,0,0,0)'); 
-		linear_gradient_ver.addColorStop(1,'rgba(0,0,0,1)');
-		this.context.fillStyle=linear_gradient_ver;
-		this.context.fillRect(0, 0, this.width, this.height); 
-	},
-	//点击取色
-	_pickcolor:function(){
-		var that=this;
-		that.jqelement.bind("click",function(e){
-			var canvasrect=that.element.getBoundingClientRect();
-			that.canvasX = e.clientX-canvasrect.left*(that.width/canvasrect.width);
-			that.canvasY = e.clientY-canvasrect.top*(that.height/canvasrect.height);
-			var imageData = that.context.getImageData(that.canvasX, that.canvasY, 1, 1);
-			var pixel = imageData.data;
-			that.rgb=pixel.slice(0,3);
-			that.hex=rgbtohex(pixel[0],pixel[1],pixel[2]);
-			that.hsl=rgbtohsl(pixel[0],pixel[1],pixel[2]);
-			that.hsv=rgbtohsv(pixel[0],pixel[1],pixel[2]);
+_init:function(){
+	this.canvasX=0;//左边取色区域相对于canvas画布水平位置
+	this.canvasY=0;//左边取色区域相对于canvas画布垂直位置
+	this.hsl=[0,100,50];//初始化hsl
+	this.rgb=[255,0,0];//初始化rgb
+	this.hsv=[0,100,100];//初始化hsv
+	this.hex="#ffffff";//初始化hex
+	this._drawbg();//绘制左边取色渐变区域的函数
+	this._pickcolor();//在左边点击取色的函数
+	this._slidecolor();//在中间色块点击取色相的函数
+	this._updatergb();//更新rgb，hex的数值
+	this._updatehslv();//更新hsl，hsv的数值
+	this._contentchange();//监听表单的输入，并作出相应的更新
+},
+//填充左边颜色的渐变
+_drawbg:function(color){
+	var x1 = 0;
+	var y1 = 0;
+	//水平的渐变
+	var linear_gradient_hori = this.context.createLinearGradient(x1, y1, this.width, 0);
+	linear_gradient_hori.addColorStop(0, 'rgba(255,255,255,1)'); 
+	linear_gradient_hori.addColorStop(1,color?color:'rgba(255,0,0,1)');//添加上颜色
+	this.context.fillStyle=linear_gradient_hori;
+	this.context.fillRect(0, 0, this.width, this.height); 
+	//垂直的渐变
+	var linear_gradient_ver = this.context.createLinearGradient(x1, y1, 0, this.height);
+	linear_gradient_ver.addColorStop(0, 'rgba(0,0,0,0)'); 
+	linear_gradient_ver.addColorStop(1,'rgba(0,0,0,1)');
+	this.context.fillStyle=linear_gradient_ver;
+	this.context.fillRect(0, 0, this.width, this.height); 
+},
+//点击取色
+_pickcolor:function(){
+	var that=this;
+	that.jqelement.bind("click",function(e){
+		var canvasrect=that.element.getBoundingClientRect();
+		that.canvasX = e.clientX-canvasrect.left*(that.width/canvasrect.width);//获取点击的位置
+		that.canvasY = e.clientY-canvasrect.top*(that.height/canvasrect.height);
+		var imageData = that.context.getImageData(that.canvasX, that.canvasY, 1, 1);//用canvas的getImageData方法来获得该处的颜色
+		var pixel = imageData.data;
+		that.rgb=pixel.slice(0,3);
+		that.hex=rgbtohex(pixel[0],pixel[1],pixel[2]);
+		that.hsl=rgbtohsl(pixel[0],pixel[1],pixel[2]);
+		that.hsv=rgbtohsv(pixel[0],pixel[1],pixel[2]);
+		that._updatergb();
+		that._updatehslv();
+		that.pickercircle.css({"top":that.canvasY-5,"left":that.canvasX-5});//设置取色小圆圈的位置。-5是因为是圆形，需要减去宽高和边框;
+	})
+},
+_slidecolor:function(){
+	var that=this;
+	that.jqslide.bind("click",function(e){
+		if(e.target.id=="colorpicker-slide"){
+			$("#colorslide-circle").css({"top":e.offsetY-8});//减去圆圈本身的高度和边框;
+			that.hsl[0]=that.hsv[0]=Math.round(e.offsetY/that.height*360);//在这里选择只是变化了h值
+			var hsl=that.hsl[0]+",100%,50%,1";
+			that._drawbg("hsla("+hsl+")");//重新绘制左边的渐变图;
+			that.rgb=hsltorgb(that.hsl[0],that.hsl[1],that.hsl[2]);
 			that._updatergb();
-			that._updatehslv();
-			that.pickercircle.show();
-			that.pickercircle.css({"top":that.canvasY-5,"left":that.canvasX-5});//-5是因为是圆形，需要减去宽高和边框;
-		})
-	},
-	_slidecolor:function(){
-		var that=this;
-		// that.slide.addEventListener('mousedown',function(e){
-		that.jqslide.bind("click",function(e){
-			// console.log();
-			if(e.target.id=="colorpicker-slide"){
-				$("#colorslide-circle").show();
-				that.pickercircle.show();
-				$("#colorslide-circle").css({"top":e.offsetY-8});//减去圆圈本身的高度和边框;
-				console.log(that.hsl);
-				// var hsl=[];
-				that.hsl[0]=that.hsv[0]=Math.round(e.offsetY/that.height*360);//在这里选择只是变化了h值
-				var hsl=that.hsl[0]+",100%,50%,1";
-				that._drawbg("hsla("+hsl+")");//重新绘制左边的渐变图;
-				that.rgb=hsltorgb(that.hsl[0],that.hsl[1],that.hsl[2]);
-				that._updatergb();
-				$("#colorpicker-hslh").val(that.hsl[0]);
-				$("#colorpicker-hsvh").val(that.hsv[0]);
-			}
-		})
-	},
-	//更新rgb ，hex 和颜色块数据
-	_updatergb:function(){
-		$("#colorpicker-rgbr").val(this.rgb[0]);
-		$("#colorpicker-rgbg").val(this.rgb[1]);
-		$("#colorpicker-rgbb").val(this.rgb[2]);
-		this.hex=rgbtohex(this.rgb[0],this.rgb[1],this.rgb[2]);
-		$("#hex").val(this.hex);
-		$("#pickercolor").css({"background-color":this.hex});
-	},
-	//更新hsl和hsv的数据
-	_updatehslv:function(){
-		this.hsv=rgbtohsv(this.rgb[0],this.rgb[1],this.rgb[2]);
-		$("#colorpicker-hsvh").val(this.hsv[0]);
-		$("#colorpicker-hsvs").val(this.hsv[1]);
-		$("#colorpicker-hsvv").val(this.hsv[2]);
-		$("#colorpicker-hslh").val(this.hsl[0]);
-		$("#colorpicker-hsls").val(this.hsl[1]);
-		$("#colorpicker-hsll").val(this.hsl[2]);
-	},
-	//监听表单数据变化
-	_contentchange(){
-		var that=this;
-		$("#hex").bind("change",function(e){
-		// $("#hex").change=function(){
-			var hex=$("#hex").val();
-			var rgb;
-			if(rgb=hextorgb(hex)){
-				that.hex=hex;
-				that.rgb=rgb;
-				that.hsl=rgbtohsl(rgb[0],rgb[1],rgb[2]);
+			$("#colorpicker-hslh").val(that.hsl[0]);
+			$("#colorpicker-hsvh").val(that.hsv[0]);
+		}
+	})
+},
+//更新rgb ，hex 和颜色块数据
+_updatergb:function(){
+	$("#colorpicker-rgbr").val(this.rgb[0]);
+	$("#colorpicker-rgbg").val(this.rgb[1]);
+	$("#colorpicker-rgbb").val(this.rgb[2]);
+	this.hex=rgbtohex(this.rgb[0],this.rgb[1],this.rgb[2]);
+	$("#hex").val(this.hex);
+	$("#pickercolor").css({"background-color":this.hex});
+},
+//更新hsl和hsv的数据
+_updatehslv:function(){
+	this.hsv=rgbtohsv(this.rgb[0],this.rgb[1],this.rgb[2]);
+	$("#colorpicker-hsvh").val(this.hsv[0]);
+	$("#colorpicker-hsvs").val(this.hsv[1]);
+	$("#colorpicker-hsvv").val(this.hsv[2]);
+	$("#colorpicker-hslh").val(this.hsl[0]);
+	$("#colorpicker-hsls").val(this.hsl[1]);
+	$("#colorpicker-hsll").val(this.hsl[2]);
+},
+//监听表单数据变化
+_contentchange(){
+	var that=this;
+	$("#hex").bind("change",function(e){
+	// $("#hex").change=function(){
+		var hex=$("#hex").val();
+		var rgb;
+		if(rgb=hextorgb(hex)){
+			that.hex=hex;
+			that.rgb=rgb;
+			that.hsl=rgbtohsl(rgb[0],rgb[1],rgb[2]);
+			that.hsv=rgbtohsv(that.rgb[0],that.rgb[1],that.rgb[2]);
+			that._updatechange();
+		}
+	})
+	$(".rgbbox input").each(function(index,obj){
+		$(obj).bind("change",function(e){
+			var value=parseInt($(obj).val());
+			if(value>0 && value<=255){
+				that.rgb[index]=value;
+				that.hex=rgbtohex(that.rgb[0],that.rgb[1],that.rgb[2]);
+				that.hsl=rgbtohsl(that.rgb[0],that.rgb[1],that.rgb[2]);
 				that.hsv=rgbtohsv(that.rgb[0],that.rgb[1],that.rgb[2]);
 				that._updatechange();
 			}
 		})
-		$(".rgbbox input").each(function(index,obj){
-			$(obj).bind("change",function(e){
-				var value=parseInt($(obj).val());
-				if(value>0 && value<=255){
-					that.rgb[index]=value;
-					that.hex=rgbtohex(that.rgb[0],that.rgb[1],that.rgb[2]);
-					that.hsl=rgbtohsl(that.rgb[0],that.rgb[1],that.rgb[2]);
-					that.hsv=rgbtohsv(that.rgb[0],that.rgb[1],that.rgb[2]);
-					that._updatechange();
-				}
-			})
-			
-		})
-		$(".hslbox input").each(function(index,obj){
-			$(obj).bind("change",function(e){
-				var value=parseInt($(obj).val());
-				if((index==0 && value<=360 && value>=0)||(value<=100 && value>=0)){
-					that.hsl[index]=value;
-					that.rgb=hsltorgb(that.hsl[0],that.hsl[1],that.hsl[2]);
-					that.hsv=rgbtohsv(that.rgb[0],that.rgb[1],that.rgb[2]);
-					that.hex=rgbtohex(that.rgb[0],that.rgb[1],that.rgb[2]);
-					that._updatechange();
-				}
-			})
-			
-		})
-		$(".hsvbox input").each(function(index,obj){
-			$(obj).bind("change",function(e){
-				var value=parseInt($(obj).val());
-				if((index==0 && value<=360 && value>=0)||(value<=100 && value>=0)){
-					that.hsv[index]=value;
-					that.rgb=hsvtorgb(that.hsv[0],that.hsv[1],that.hsv[2]);
-					that.hsl=rgbtohsl(that.rgb[0],that.rgb[1],that.rgb[2]);
-					that.hex=rgbtohex(that.rgb[0],that.rgb[1],that.rgb[2]);
-					that._updatechange();
-				}
-			})
-			
+		
+	})
+	$(".hslbox input").each(function(index,obj){
+		$(obj).bind("change",function(e){
+			var value=parseInt($(obj).val());
+			if((index==0 && value<=360 && value>=0)||(value<=100 && value>=0)){
+				that.hsl[index]=value;
+				that.rgb=hsltorgb(that.hsl[0],that.hsl[1],that.hsl[2]);
+				that.hsv=rgbtohsv(that.rgb[0],that.rgb[1],that.rgb[2]);
+				that.hex=rgbtohex(that.rgb[0],that.rgb[1],that.rgb[2]);
+				that._updatechange();
+			}
 		})
 		
-	},
-	// 更新表单输入而产生的变化
-	_updatechange(){
-		this._updatergb();
-		this._updatehslv();
-		var offestheight=this.hsl[0]/360*this.height;
-		//改变颜色条选择圆圈的位置
-		$("#colorslide-circle").show();
-		this.pickercircle.show();
-		$("#colorslide-circle").css({"top":offestheight-8});
-		var hsl=this.hsl[0]+",100%,50%,1";
-		this._drawbg("hsla("+hsl+")");//重新绘制左边的渐变图;
-		// 根据hsb来确定渐变区域选色圆圈的位置
-		this.hsv=rgbtohsv(this.rgb[0],this.rgb[1],this.rgb[2]);
-		var canvaswidth=this.hsv[1]/100*this.width;
-		var canvasheight=(1-this.hsv[2]/100)*this.height;
-		this.pickercircle.css({"top":canvasheight-5,"left":canvaswidth-5});//-5是因为是圆形，需要减去宽高和边框;
+	})
+	$(".hsvbox input").each(function(index,obj){
+		$(obj).bind("change",function(e){
+			var value=parseInt($(obj).val());
+			if((index==0 && value<=360 && value>=0)||(value<=100 && value>=0)){
+				that.hsv[index]=value;
+				that.rgb=hsvtorgb(that.hsv[0],that.hsv[1],that.hsv[2]);
+				that.hsl=rgbtohsl(that.rgb[0],that.rgb[1],that.rgb[2]);
+				that.hex=rgbtohex(that.rgb[0],that.rgb[1],that.rgb[2]);
+				that._updatechange();
+			}
+		})
+		
+	})
+	
+},
+// 更新表单输入而产生的变化
+_updatechange(){
+	this._updatergb();
+	this._updatehslv();
+	var offestheight=this.hsl[0]/360*this.height;
+	//改变颜色条选择圆圈的位置
+	$("#colorslide-circle").show();
+	this.pickercircle.show();
+	$("#colorslide-circle").css({"top":offestheight-8});
+	var hsl=this.hsl[0]+",100%,50%,1";
+	this._drawbg("hsla("+hsl+")");//重新绘制左边的渐变图;
+	// 根据hsb来确定渐变区域选色圆圈的位置
+	this.hsv=rgbtohsv(this.rgb[0],this.rgb[1],this.rgb[2]);
+	var canvaswidth=this.hsv[1]/100*this.width;
+	var canvasheight=(1-this.hsv[2]/100)*this.height;
+	this.pickercircle.css({"top":canvasheight-5,"left":canvaswidth-5});//-5是因为是圆形，需要减去宽高和边框;
 
-	}
+}
 };
 
 new colorPicker("canvas");
