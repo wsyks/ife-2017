@@ -1,0 +1,73 @@
+
+
+    .progress2{
+        width: 200px;
+        height: 200px;
+        margin: 100px auto;
+        position: relative;
+        border:1px solid #ddd;
+    }
+   
+    .rect{
+        width: 100px;
+        height: 200px;
+        position: absolute;
+        top:0;
+        overflow: hidden;
+    }
+    .right{
+        right:0;
+    }
+    .left{
+        left:0;
+    }
+    .circle{
+        width: 160px;
+        height: 160px;
+        border:20px solid rgb(41,137,216);
+        border-radius: 50%;
+        position: absolute;
+        top:0;
+        transform: rotate(45deg);
+    }
+    .rightcircle{
+        border-top:20px solid #ccc;
+        border-right:20px solid #ccc;
+        right:0;
+        animation: load_right 5s linear infinite;
+    }
+    .leftcircle{
+        border-bottom:20px solid #ccc;
+        border-left:20px solid #ccc;
+        left:0;
+        animation: load_left 5s linear infinite;
+    }
+    @keyframes load_right{
+        0%{
+
+            transform: rotate(45deg);
+        }
+        50%{
+
+            transform: rotate(225deg);
+        }
+        100%{
+
+            transform: rotate(225deg);
+        }
+    }
+    @keyframes load_left{
+        0%{
+
+            transform: rotate(45deg);
+        }
+        50%{
+
+            transform: rotate(45deg);
+        }
+        100%{
+            transform: rotate(225deg);
+        }
+    }
+
+
