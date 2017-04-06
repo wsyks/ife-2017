@@ -4,17 +4,34 @@
     box-sizing: border-box;
 }
 .progress{
+    width: 80px;
+    height: 80px;
+    margin: 100px auto;
+}
+.inner{
     position: relative;
-    margin:50px auto;
     width: 50px;
     height: 50px;
     background-color: #d5d5d5;
     border-radius: 50%;
     overflow: hidden;
+    top:50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
     // opacity: 0.9;
 }
-
-.progress .first{
+.outer{
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    border: 2px solid #F08080;
+    border-radius: 50%;
+    /* border-bottom: none; */
+    border-bottom-color: transparent;
+    animation: outer 2s infinite linear;
+    
+}
+.inner .first{
     left: 0;
     width: 25px;
     height: 50px;
@@ -23,7 +40,7 @@
     overflow: hidden;
 }
 
-.progress .second{
+.inner .second{
     left: 50%;
     width: 25px;
     height: 50px;
@@ -31,7 +48,7 @@
     top: 0%;
     overflow: hidden;
 }
-.progress .firstcircle{
+.inner .firstcircle{
     width: 100%;
     height: 100%;
     background-color: lightcoral;
@@ -41,16 +58,19 @@
     border-bottom-left-radius: 50px;
 }
 
-.progress .secondcircle{
+.inner .secondcircle{
     width: 100%;
     height: 100%;
     background-color: lightcoral;
     transform-origin: left center;
-    animation: right1 2s infinite linear;
+    animation: right 2s infinite linear;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
 }
-
+@keyframes outer{
+   0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}
 @keyframes left{
     0%{transform: rotate(0deg);}
     25%{transform: rotate(0deg);}
@@ -58,7 +78,7 @@
     75%{transform: rotate(180deg);}
     100%{transform: rotate(360deg);}
 }
-@keyframes right1{
+@keyframes right{
     0%{transform: rotate(0deg);}
     25%{transform: rotate(180deg);}
     50%{transform: rotate(180deg);}
