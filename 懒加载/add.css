@@ -1,0 +1,134 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei";
+}
+
+body,.container{
+	width: 100%;
+}
+
+li {
+	list-style: none;
+}
+
+.title {
+	text-align: center;
+    font-size: 25px;
+    width: 60%;
+    height: 60px;
+    line-height: 60px;
+    background: #333333;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 20%;
+}
+
+
+.scrollbox {
+	background-color: #eee;
+	width: 60%;
+	margin:0 auto;
+	padding: 60px 10px 80px 10px;
+	box-sizing: border-box;
+}
+
+.scrollitem {
+	background: #eee;
+	border-top: 1px solid #ddd;
+	height: 50px;
+	line-height: 50px;
+	padding: 0 0 0 20px;
+}
+
+.scroll-inner {
+	padding: 0 20px 0;
+}
+
+/*加载动画*/
+.loadbox {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	display: none;
+}
+
+.load {
+	height: 80px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.loading {
+	position: relative;
+}
+
+.loading li {
+	display: block;
+	width: 8px;
+	height: 8px;
+	background-color: #333333;
+	border-radius: 50%;
+	position: absolute;
+}
+
+.loading li:nth-child(1) {
+    top: 15px;
+    left: 0px;
+    -webkit-animation: loading .7s ease 0s infinite;
+}
+
+.loading li:nth-child(2) {
+    top: 10.6px;
+    left: 10.6px;
+    -webkit-animation: loading .7s ease .1s infinite;
+}
+
+.loading li:nth-child(3) {
+    top: 0px;
+    left: 15px;
+    -webkit-animation: loading .7s ease .2s infinite;
+}
+
+.loading li:nth-child(4) {
+    top: -10.6px;
+    left: 10.6px;
+    -webkit-animation: loading .7s ease .3s infinite;
+}
+
+.loading li:nth-child(5) {
+    top: -15px;
+    left: 0px;
+    -webkit-animation: loading .7s ease .4s infinite;
+}
+
+.loading li:nth-child(6) {
+    top: -10.6px;
+    left: -10.6px;
+    -webkit-animation: loading .7s ease .5s infinite;
+}
+
+.loading li:nth-child(7) {
+    top: 0px;
+    left: -15px;
+    -webkit-animation: loading .7s ease .6s infinite;
+}
+
+.loading li:nth-child(8) {
+    top: 10.6px;
+    left: -10.6px;
+    -webkit-animation: loading .7s ease .7s infinite;
+}
+
+@keyframes loading {
+	50%{
+		-webkit-transform: scale(0.4);
+		opacity: 0.5;
+	}
+	100%{
+		-webkit-transform: scale(1);
+		opacity: 1;
+	}
+}
