@@ -1,0 +1,70 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.progress{
+    position: relative;
+    margin:50px auto;
+    width: 50px;
+    height: 50px;
+    background-color: #d5d5d5;
+    border-radius: 50%;
+    overflow: hidden;
+    // opacity: 0.9;
+}
+
+.progress .first{
+    left: 0;
+    width: 25px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+}
+
+.progress .second{
+    left: 50%;
+    width: 25px;
+    height: 50px;
+    position: absolute;
+    top: 0%;
+    overflow: hidden;
+}
+.progress .firstcircle{
+    width: 100%;
+    height: 100%;
+    background-color: lightcoral;
+    transform-origin: right center;
+    animation: left 2s infinite linear;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+.progress .secondcircle{
+    width: 100%;
+    height: 100%;
+    background-color: lightcoral;
+    transform-origin: left center;
+    animation: right1 2s infinite linear;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+@keyframes left{
+    0%{transform: rotate(0deg);}
+    25%{transform: rotate(0deg);}
+    50%{transform: rotate(180deg);}
+    75%{transform: rotate(180deg);}
+    100%{transform: rotate(360deg);}
+}
+@keyframes right1{
+    0%{transform: rotate(0deg);}
+    25%{transform: rotate(180deg);}
+    50%{transform: rotate(180deg);}
+    75%{transform: rotate(360deg);}
+    100%{transform: rotate(360deg);}
+}
+
+
+          

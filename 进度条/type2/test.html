@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>overflowtest</title>
+	<style>
+		*{
+			padding: 0px;
+			margin:0px;
+		}
+		.red{
+			width: 100px;
+			height: 100px;
+			background: red;
+			overflow: hidden;
+			/*opacity: 0.9;*/
+			position: relative;
+			border-radius: 50%;
+			
+		}
+		.green{
+			width: 50px;
+			height: 100px;
+			background: green;
+			overflow: hidden;
+			/*opacity: 0.9;*/
+			position: relative;
+
+		}
+		.yellow{
+			width: 50px;
+			height: 100px;
+			background: yellow;
+			/*margin: 30px 0 0 30px;*/
+			position: absolute;
+			/*top:30px;*/
+			/*left: 30px;*/
+		}
+	</style>
+</head>
+<body>
+	<div class="red">
+		<div class="green">
+			<div class="yellow">
+				djdfkjdfjdkjdfkjkdfjkfjdkjfdjkdfkjdfkjfdjkfdjkjkdfjfkdjkfdjkfjkddfkjfjkdfdjkdfkjfjkd
+			</div>
+		</div>
+	</div>
+</body>
+</html>
