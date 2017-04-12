@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ife2017 js与树1</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing: content-box;
+			background-color: white;
+		}
+		.box{
+			width:calc(50% - 10px);
+			padding:10px; 
+			border: 1px solid;
+			margin:10px;
+			display: flex;
+			justify-content:space-around;
+
+		}
+		.container{
+			width:800px;
+			height: 200px;
+			border: 1px solid;
+			padding:10px;
+			margin:30px auto;
+			display: flex;
+			justify-content:space-around;
+
+		}
+		.select{
+			background: blue !important;
+		}
+		.root{
+			border: 1px solid;
+			padding:10px;
+			margin:30px auto;
+			width: 880px;
+		}
+		.btnlist{
+			width: 880px;
+			margin:20px auto;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+<div class="root content">
+	<div class="container content">
+		<div class="box content">
+			<div class="box content">
+				<div class="box content">
+					
+				</div>
+				<div class="box content">
+					
+				</div>
+			</div>
+			<div class="box content">
+				<div class="box content">
+					
+				</div>
+				<div class="box content">
+					
+				</div>
+			</div>
+		</div>
+		<div class="box content">
+			<div class="box content">
+				<div class="box content">
+					
+				</div>
+				<div class="box content">
+					
+				</div>
+			</div>
+			<div class="box content">
+				<div class="box content">
+					
+				</div>
+				<div class="box content">
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="container content">
+		<div class="box content">
+			<div class="box content">
+				<div class="box content"></div>
+				<div class="box content"></div>
+			</div>
+			<div class="box content">
+				<div class="box content">
+					
+				</div>
+				<div class="box content">
+					
+				</div>
+			</div>
+		</div>
+		<div class="box content">
+			<div class="box content">
+				<div class="box content">
+					
+				</div>
+				<div class="box content">
+					
+				</div>
+			</div>
+			<div class="box content">
+				<div class="box content">
+					
+				</div>
+				<div class="box content">
+					
+				</div>
+			</div>
+		</div>
+	
+	</div>
+</div>
+<div class="btnlist">
+	<button class="prebtn">前序</button>
+	<button class="inbtn">中序</button>
+	<button class="posbtn">后序</button>
+</div>
+
+	<script src="1.js"></script>
+
+	<script>
+		function front(elment,arr){
+			if(elment !=null){
+				arr.push(elment);
+				front(elment.firstElementChild,arr);
+				front(elment.lastElementChild,arr);
+			}
+		}
+		function inside(elment,arr){
+			if(elment !=null){
+				inside(elment.firstElementChild,arr);
+				arr.push(elment);
+				inside(elment.lastElementChild,arr);
+			}
+		}
+		function after(elment,arr){
+			if(elment !=null){
+				front(elment.firstElementChild,arr);
+				front(elment.lastElementChild,arr);
+				arr.push(elment);
+			}
+		}
+		function changecolor(arr){
+			var i=0;
+			setTimeout(function(){
+				var node=document.querySelectorAll(".content");
+				for(var j=0;j<node.length;j++){
+					console.log(j);
+					node[j].style.backgroundColor="white";
+				}
+				if(i<arr.length){
+					arr[i].style.backgroundColor="blue";
+					i++;
+					setTimeout(arguments.callee,500);
+				}
+			},500);
+		}
+		var rootnode=document.querySelector(".root");
+		var prebtn=document.querySelector(".prebtn");
+		var inbtn=document.querySelector(".inbtn");
+		var posbtn=document.querySelector(".posbtn");
+
+		prebtn.onclick=function(){
+			var arr=[];
+			front(rootnode,arr);
+			changecolor(arr);
+		}
+
+		inbtn.onclick=function(){
+			var arr=[];
+			inside(rootnode,arr);
+			changecolor(arr);
+		}
+
+		posbtn.onclick=function(){
+			var arr=[];
+			after(rootnode,arr);
+			changecolor(arr);
+		}
+
+		
+	</script>
+</body>
+</html>
