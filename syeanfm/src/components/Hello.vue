@@ -284,6 +284,8 @@ export default {
   outline: none;
   background-color: transparent;
   font-size: 30px;
+  color:#919191;
+  
 }
 .pause{
   width: 35px;
