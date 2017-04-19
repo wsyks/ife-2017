@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>WebGL threejs入门</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		div{
+			width: 800px;
+			margin:40px auto;
+		}
+	</style>
+</head>
+<body onload="init()">
+	<div>
+		<canvas id="car" width="800" height="600"></canvas>
+	</div>
+	<script src="./lib/three.js"></script>
+	<script>
+		function init(){
+			var renderer = new THREE.WebGLRenderer({
+				canvas: document.getElementById("car"),
+				antialias: true,   //  开启消除锯齿,默认false
+     			precision: "highp"   // 渲染精度  highp/mediump/lowp
+			});
+			renderer.shadowMapEnabled = true;
+			renderer.shadowMapSoft = true;
+			renderer.setClearColor(0x666666);
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera(45,4/3,1,1000);
+			camera.position.set(50,40,50);
+      		camera.lookAt(scene.position);
+
+			scene.add(camera);
+			var planeGeometry= new THREE.PlaneGeometry(100,60);
+	        var planeMaterial=new THREE.MeshLambertMaterial({color:0x8F9F6C});
+	        var plane=new THREE.Mesh(planeGeometry,planeMaterial);
+	        plane.receiveShadow=true;
+
+	        plane.rotation.x=-0.5*Math.PI;
+	        plane.position.x=-5;
+	        plane.position.y=-5;
+	        plane.position.z=0;
+
+	        scene.add(plane);
+
+
+			var cubeGeometry = new THREE.BoxGeometry(20,10,10);
+			var material = new THREE.MeshLambertMaterial({color:0xD2D2D2,wireframe:false});
+			var cube = new THREE.Mesh(cubeGeometry,material);
+			cube.castShadow=true;
+			scene.add(cube);
+
+			var torusGeometry = new THREE.TorusGeometry(1.8, 0.8, 12, 18);
+			var torus1 = new THREE.Mesh(torusGeometry,material);
+			var torus2 = new THREE.Mesh(torusGeometry,material);
+			var torus3 = new THREE.Mesh(torusGeometry,material);
+			var torus4 = new THREE.Mesh(torusGeometry,material);
+
+			torus1.position.set(-0.4,0.2,10.2);
+			torus2.position.set(0,0,-0.1);
+			torus3.position.set(12,0.2,10.2);
+			torus4.position.set(8,-4.2,-5.5);
+			torus1.castShadow=true;
+			torus2.castShadow=true;
+			torus3.castShadow=true;
+			torus4.castShadow=true;
+
+			scene.add(torus1);
+			scene.add(torus2);
+			scene.add(torus3);
+			scene.add(torus4);
+
+			var spotLight=new THREE.SpotLight(0xffffff);   // 添加环境光
+ 			spotLight.position.set(-300, 300, 300);   // 
+        	// light.target=cube;
+        	spotLight.castShadow=true;
+
+ 			scene.add(spotLight);
+  			renderer.render(scene,camera);
+
+
+		}
+	</script>
+</body>
+</html>
