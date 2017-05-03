@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动态绑定数据2</title>
+</head>
+<body>
+<script src="browser.js"></script>
+<script type="text/babel">
+var Observer = function(data){
+	this.data = data;
+	this.build(data);
+}
+
+Observer.prototype={
+	
+	build: function(obj){
+		for(var key in obj){
+			if(obj.hasOwnProperty(key)) {
+				var value = obj[key];
+				if(value instanceof Object){
+					new Observer(value);
+				}
+				this.convert(key,value);
+			}
+		}
+	},
+	convert: function(key,value){
+		this.$watch(key,function(value){
+			console.log(`你设置了${key},新的值为${value}`);
+		})
+		// console.log(this.data);
+		var self=this;
+		Object.defineProperty(this.data,key,{
+			enumerable: true,
+    		configurable: true,
+			get: function(){
+				console.log("你访问了"+key);
+				return value;
+			},
+			set: function(newV){
+				self.$watch[key](newV);
+				// console.log("你设置了"+key);
+				// console.log(key+"被设置成了"+newV);
+				if (typeof newV === 'object') {
+		      		new Observer(newV)
+		      	}
+		      	if (newV === value) return;
+				value = newV;
+				// console.log(this.value);
+			}
+		})
+	},
+	$watch:function(key,callback){
+		this.$watch[key]=callback;
+	},
+}
+
+var data = {
+    user: {
+        name: "fiona",
+        age: 20
+    },
+    address: {
+        city: "chengdu"
+    }
+};
+
+var app = new Observer(data);
+
+app.data.user.name={
+	last:"QIU",
+	first:"Yaoyao"
+};
+</script>
+</body>
+</html>

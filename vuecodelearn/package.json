@@ -1,0 +1,11 @@
+{
+  "name": "vuelearn",
+  "version": "1.0.0",
+  "description": "vue learn",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "fionsky911",
+  "license": "ISC"
+}

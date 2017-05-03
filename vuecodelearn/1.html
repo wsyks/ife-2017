@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>动态绑定数据1</title>
+</head>
+<body>
+<script>
+Observer = function(data){
+	this.data = data;
+	this._watch(data);
+}
+
+Observer.prototype={
+	_watch: function(obj){
+		for(var key in obj){
+			if(obj.hasOwnProperty(key)) {
+				var value = obj[key];
+				if(value instanceof Object){
+					new Observer(value);
+				}
+				this._convert(key,value);
+			}
+		}
+	},
+	_convert: function(key,value){
+		console.log(this.data);
+		Object.defineProperty(this.data,key,{
+			get: function(){
+				console.log("你访问了"+key);
+				return value;
+			},
+			set: function(newV){
+				console.log("你设置了"+key);
+				console.log(key+"被设置成了"+newV);
+				value = newV;
+			}
+		})
+	}
+}
+
+var data = {
+    user: {
+        name: "fiona",
+        age: 20
+    },
+    address: {
+        city: "chengdu"
+    }
+};
+
+var app = new Observer(data);
+
+</script>
+</body>
+</html>

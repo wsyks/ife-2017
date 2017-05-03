@@ -28,6 +28,7 @@
 			});
 			renderer.shadowMapEnabled = true;
 			renderer.shadowMapSoft = true;
+			
 			renderer.setClearColor(0x666666);
 			var scene = new THREE.Scene();
 			var camera = new THREE.PerspectiveCamera(45,4/3,1,1000);
@@ -36,7 +37,7 @@
 
 			scene.add(camera);
 			var planeGeometry= new THREE.PlaneGeometry(100,60);
-	        var planeMaterial=new THREE.MeshLambertMaterial({color:0x8F9F6C});
+	        var planeMaterial=new THREE.MeshPhongMaterial({color:0x8F9F6C});
 	        var plane=new THREE.Mesh(planeGeometry,planeMaterial);
 	        plane.receiveShadow=true;
 
@@ -61,24 +62,30 @@
 			var torus4 = new THREE.Mesh(torusGeometry,material);
 
 			torus1.position.set(-0.4,0.2,10.2);
-			torus2.position.set(0,0,-0.1);
+			torus2.position.set(-6.5,-4.2,-5.5);
 			torus3.position.set(12,0.2,10.2);
 			torus4.position.set(8,-4.2,-5.5);
 			torus1.castShadow=true;
 			torus2.castShadow=true;
 			torus3.castShadow=true;
 			torus4.castShadow=true;
+			torus1.receiveShadow = true;
+			torus2.receiveShadow = true;
+			torus3.receiveShadow = true;
+			torus4.receiveShadow = true;
 
 			scene.add(torus1);
 			scene.add(torus2);
 			scene.add(torus3);
 			scene.add(torus4);
 
+			 // 
+        	var ambientLight = new THREE.AmbientLight(0x333333);
+           	scene.add(ambientLight);
 			var spotLight=new THREE.SpotLight(0xffffff);   // 添加环境光
- 			spotLight.position.set(-300, 300, 300);   // 
-        	// light.target=cube;
+ 			spotLight.position.set(-300, 300, 300);  
         	spotLight.castShadow=true;
-
+ 			spotLight.target=cube;
  			scene.add(spotLight);
   			renderer.render(scene,camera);
 
